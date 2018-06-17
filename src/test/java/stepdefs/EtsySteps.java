@@ -41,6 +41,7 @@ public class EtsySteps {
 	@Then("Search results should be displayed")
 	public void search_results_should_be_displayed() {
 		Assert.assertTrue(driver.getTitle().toLowerCase().startsWith(keyword));
+		driver.quit();
 
 	}
 

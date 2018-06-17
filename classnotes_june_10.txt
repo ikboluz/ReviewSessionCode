@@ -1,0 +1,180 @@
+06/10/2018
+----------
+
+Sunday Review session.
+
+When file newly added to git local repository:
+1) Untracked status when file is just added.
+If we want to commit that file:
+
+2)We need add to Staging area/Index. git add command
+
+3)Commit 
+
+git remote add origin https://github.com/CybertekSchool/ReviewSessionsCode.git
+
+--> link local repo to remote repo
+
+
+git push -u origin master
+
+====================
+CybertekSchools-iMac:~ cybertekschool$ cd /Users/cybertekschool/eclipse-workspace/ReviewSessionsCode
+CybertekSchools-iMac:ReviewSessionsCode cybertekschool$ ls
+pom.xml	src	target
+CybertekSchools-iMac:ReviewSessionsCode cybertekschool$ git init
+Initialized empty Git repository in /Users/cybertekschool/eclipse-workspace/ReviewSessionsCode/.git/
+CybertekSchools-iMac:ReviewSessionsCode cybertekschool$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	.classpath
+	.project
+	.settings/
+	pom.xml
+
+nothing added to commit but untracked files present (use "git add" to track)
+CybertekSchools-iMac:ReviewSessionsCode cybertekschool$ git add pom.xml
+CybertekSchools-iMac:ReviewSessionsCode cybertekschool$ git commit -m "initial commit with pom.xml"
+[master (root-commit) af0f4c8] initial commit with pom.xml
+ 1 file changed, 6 insertions(+)
+ create mode 100644 pom.xml
+CybertekSchools-iMac:ReviewSessionsCode cybertekschool$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	.classpath
+	.project
+	.settings/
+
+nothing added to commit but untracked files present (use "git add" to track)
+CybertekSchools-iMac:ReviewSessionsCode cybertekschool$ git log
+commit af0f4c8ae341075bee3ef56a935ac127c273e52e (HEAD -> master)
+Author: github@cybertekschool.com <github@cybertekschool.com>
+Date:   Sun Jun 10 11:43:15 2018 -0400
+
+    initial commit with pom.xml
+CybertekSchools-iMac:ReviewSessionsCode cybertekschool$ git remote add origin https://github.com/CybertekSchool/ReviewSessionsCode.git
+CybertekSchools-iMac:ReviewSessionsCode cybertekschool$ git push -u origin master
+Counting objects: 3, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 434 bytes | 434.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/CybertekSchool/ReviewSessionsCode.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+=======================
+
+VCM -VERSION CONTROL MANAGMENT TOOLS
+
+GIT, CVS, SVN
+
+BITBUCKET, GITHUB, GITLAB
+============================
+
+How do you do code review?
+
+Elvira: Everyone in the team joins the webinar and developer/you present
+your code in your IDE(Eclipse, IntelliJ).
+
+Once approved by everyone -> Code is pushed to remote repo and 
+everyone can now pull and use it.
+=============================
+
+I worked in projects where I had to test different application layers:
+1) Front end layer/UI automation -> Selenium WebDriver
+2) API layer/RESTful API -> Postman, RestAssured
+3) Database layer/Relational database -> Oracle 11G.
+	SQL -> JDBC
+
+
+
+
+How do you test API service?
+----------------------------
+
+To test API service I send requests to API endpoints and verify response
+from Rest API.
+
+After learning about RESTFul API endpoint URLs, I send POST,GET,PUT, DELETE type of Http requests/calls to those URLS and verify/assert the response according to user story/requirement.
+
+In some scenarios - I make sure API response data matches the values in database.
+
+Our developers set up Swagger UI and we can see full endpoints and sample request/response there.
+======================
+
+
+How do you validate your response from your API?
+------------------------------------------------
+REQUEST: header: Accepttype, COntentType, authentication etc
+	Request body for NON get request
+	Params
+
+
+RESPONSE: Status code/Status line
+		  JSON/XML Body
+		  Content type
+
+I design my test according to what is expected/requirements:
+
+Firstly I assert the Status code. It could be 200, 201, 400 etc.
+
+Then I validate JSON/XML Body according to requirements.
+
+I automate this process using Java RestAssured library
+and for assertions I use -> hamcrest matchers or Junit
+/ testNG asssertions.
+
+I make sure each key in the JSOn response body contains
+expected value:
+
+ "id": 4,
+ "first_name": "Eve",
+"last_name": "Holt",
+"avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/marcoramires/128.jpg"
+===========================
+
+When are you testing your service and your received 500 error and how would you debug it?
+
+if i have access to application backend logs then 
+i go and go through the logs and try to find the reason.
+
+If not, I will raise a bug/ticket/issue or ask development team to take a look, so they take a look and let me know.
+It could be api code issue or I sent some wrong request and api code could not handle it.
+-----------
+400 BAD REQUEST
+401 Unauthorized, check credentials
+--------------
+
+Authorization/Authentication
+============================
+
+1) Simple username and password that you send 
+in your request as query params. as headers
+
+RestAssured:
+given().auth().basic(userName, password)
+		.when().get();
+
+given().auth().preemptive().basic(userName, password)
+		.when().get();	
+
+2) OAuth 2.0 authentication. 
+   OAuth 2.0 server generate unique access token for the user. then I can send that access token in my 
+   request header.
+
+   It can be generated manually or everytime user tries to login top application server will authenticate the user then OAth 2 server will generate token for the user. 
+
+   
+
+given().header("Authorization", "Bearer 10960~07alELbC11w2DpnwzQ1rwfJb8M5u9wqDpoRfG57DWSxnjJAVmB1evcyfvZARz4EP")
+		.when().get("https://learn.cybertekschool.com/api/v1/accounts/self/users")
+		.thenReturn().body().prettyPrint();
+
+10960~07alELbC11w2DpnwzQ1rwfJb8M5u9wqDpoRfG57DWSxnjJAVmB1evcyfvZARz4EP
